@@ -12,3 +12,20 @@
 ## 如果没有声明serialVersionUID，JVM将使用自己的算法生成默认的SerialVersionUID，您可以在此处检查算法。
 默认的serialVersionUID计算对类详细信息非常敏感，可能因不同的JVM实现而异，并且在反序列化过程中会导致意外的InvalidClassExceptions。
 ## SUN强烈建议开发人员声明serialVersionUID以避免上面列出的不同JVM问题
+
+# 项目中导入功能性能优化  几分钟优化至10s内。
+ ## Excel导入超时  
+ ### 原因: 1.nginx设置默认超时为60s。 数据量大时，导入时间会很长，超过60s。
+ ### 解决方案: 
+    #### 1. 合理利用数据结构和算法， 优化数据校验。 避免查询数据库校验。
+    #### 2. 优化更新操作，只有有内容变更的行数据，才会执行update操作。
+    #### 3. 更新数据库操作改为批量操作。 手动提交、手动提交事务。 单次提交数据量据环境验证，选择较合适的值。
+    #### 4. 新增数据按主键做个排序后，再执行insert操作。
+    #### 5. 更新数据按主键做个排序后，再执行update操作，且where只用主键列。
+
+# 图片上传 413 Request Entity Too Large
+ ##  大图片上传报错  
+ ### 原因: 上传文件请求body超过了nginx设置的上限。 client_max_body_size 10m 
+ ### 解决方案: 
+    ####  针对文件上传接口，单独设置 nginx中的 client_max_body_size 50m ， 重新nginx即可
+  
