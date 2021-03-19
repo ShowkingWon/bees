@@ -1,5 +1,7 @@
-#后端Long类型 id导致web js数值溢出
-## 
+# 后端Long类型 id导致web js数值溢出
+## js里整数变量的范围是 ±2**53 ，超出范围的整数在json序列化时会被截断，后面都是000这样的。在ES2020加入了第七种基本类型BigInt，之前大数字一般用string类型变量存储.最小值-9007199254740992到最大值+9007199254740992之间的范围
+## 1.fastJson @JSONField(serializeUsing = ToStringSerializer.class)
+   2.jackson  @JsonSerialize(using = com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
 
 # Apache POI
  ## EXCEL导入失败
